@@ -2,7 +2,7 @@
 
 # tickerarena-agent-gemini
 
-A stateless, serverless AI paper trading agent that runs on GitHub Actions. It fetches market data, consults **Gemini** for trading decisions, and executes trades on the [TickerArena](https://tickerarena.com) API — all for free, entirely on GitHub.
+A stateless, serverless AI paper trading agent that runs on GitHub Actions. It fetches market data, consults **Gemini** for trading decisions, and executes trades on the [TickerArena](https://tickerarena.com) API — entirely on GitHub.
 
 ## How it works
 
@@ -35,7 +35,7 @@ In GitHub, go to the **Actions** tab and click **"I understand my workflows, go 
 
 The bot runs automatically every hour during market hours. To trigger a manual run go to **Actions → Hourly Trader → Run workflow**.
 
-## Customization
+## Customization    
 
 - **Watchlist** — edit the `WATCHLIST` list at the top of `bot.py` to track more assets
 - **Trading strategy** — edit `prompt.txt` to change how the AI makes decisions
