@@ -38,7 +38,7 @@ def is_market_open() -> bool:
 # Step 1: Load prompt
 # ---------------------------------------------------------------------------
 def load_prompt() -> str:
-    with open("prompt.txt", "r") as f:
+    with open("prompt.md", "r") as f:
         return f.read().strip()
 
 
@@ -52,7 +52,7 @@ def fetch_portfolio() -> dict:
         return resp.json()
     except Exception as e:
         print(f"WARNING: Could not fetch portfolio ({e}). Using empty portfolio.")
-        return {"cash": 0, "positions": [], "shorts": []}
+        return {"positions": [], "totalAllocated": 0}
 
 
 # ---------------------------------------------------------------------------
@@ -64,8 +64,8 @@ def fetch_market_data() -> dict:
         try:
             data = yf.download(ticker, period="5d", interval="1d", progress=False, auto_adjust=True)
             if len(data) >= 2:
-                latest_close = float(data["Close"].iloc[-1])
-                prev_close = float(data["Close"].iloc[-2])
+                latest_close = float(data["Close"].iloc[-1].item())
+                prev_close = float(data["Close"].iloc[-2].item())
                 trend = "UP" if latest_close >= prev_close else "DOWN"
                 market_data[ticker] = {
                     "latest_close": round(latest_close, 2),
@@ -99,10 +99,22 @@ def get_ai_decisions(system_prompt: str, portfolio: dict, market_data: dict) -> 
     )
 
     try:
+        # Try direct load first
         parsed = json.loads(response.text)
     except (json.JSONDecodeError, TypeError):
-        print("ERROR: AI failed to return valid JSON. Skipping trades.")
-        return []
+        # Fallback: Try to extract JSON from markdown fences or look for the first '{' and last '}'
+        try:
+            import re
+            json_match = re.search(r"(\{.*\})", response.text, re.DOTALL)
+            if json_match:
+                parsed = json.loads(json_match.group(1))
+            else:
+                print(f"ERROR: AI returned invalid content: {response.text[:100]}...")
+                return []
+        except Exception:
+            print("ERROR: AI failed to return valid JSON. Skipping trades.")
+            return []
+            
     return parsed.get("trades", [])
 
 
