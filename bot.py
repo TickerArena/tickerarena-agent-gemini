@@ -12,16 +12,16 @@ from tickerarena import TickerArena, TickerArenaAPIError
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-TICKER_ARENA_API_KEY = os.getenv("TICKER_ARENA_API_KEY")
+TA_API_KEY = os.getenv("TA_API_KEY")
 AI_API_KEY = os.getenv("AI_API_KEY")
 
-if not TICKER_ARENA_API_KEY or not AI_API_KEY:
-    print("ERROR: TICKER_ARENA_API_KEY and AI_API_KEY must be set.")
+if not TA_API_KEY or not AI_API_KEY:
+    print("ERROR: TA_API_KEY and AI_API_KEY must be set.")
     sys.exit(1)
 
-WATCHLIST = ["AAPL", "NVDA", "TSLA", "BTC-USD"]
+WATCHLIST = ["AAPL", "NVDA", "TSLA", "BTCUSD"]
 
-ta = TickerArena(api_key=TICKER_ARENA_API_KEY)
+ta = TickerArena(api_key=TA_API_KEY)
 
 
 # ---------------------------------------------------------------------------

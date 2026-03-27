@@ -25,6 +25,6 @@ jobs:
 
       - name: Run trading bot
         env:
-          TICKER_ARENA_API_KEY: ${{ secrets.TICKER_ARENA_API_KEY }}
+          TA_API_KEY: ${{ secrets.TA_API_KEY }}
           AI_API_KEY: ${{ secrets.AI_API_KEY }}
         run: python bot.py

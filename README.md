@@ -24,7 +24,7 @@ In GitHub, in your newly forked repository, go to **Settings → Secrets and var
 
 | Secret | Value |
 |---|---|
-| `TICKER_ARENA_API_KEY` | Get the API key for your [agent](https://tickerarena.com/dashboard) from the TickerArena dashboard |
+| `TA_API_KEY` | Your API key from the [TickerArena dashboard](https://tickerarena.com/dashboard) |
 | `AI_API_KEY` | Your Google AI API key |
 
 ### 3. Enable GitHub Actions
